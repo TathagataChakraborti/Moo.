@@ -20,26 +20,26 @@
 		<link href="css/files/dashboard.css" rel="stylesheet">
 		<link href="css/files/custom.css" rel="stylesheet">
 
-	    <script src="js/files/jquery-3.2.1.min.js"></script>
+		<script src="js/files/jquery-3.2.1.min.js"></script>
 
-	    <script type="text/javascript">
+		<script type="text/javascript">
 			
-		  	$(function() {
-		  	  $('a[href*="#"]:not([href="#"])').click(function() {
-		  	    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-		  	      var target = $(this.hash);
-		  	      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-		  	      if (target.length) {
-		  	        $('html, body').animate({
-		  	          scrollTop: target.offset().top
-		  	        }, 1000);
-		  	        return false;
-		  	      }
-		  	    }
-		  	  });
-		  	});
+			$(function() {
+				$('a[href*="#"]:not([href="#"])').click(function() {
+					if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+						var target = $(this.hash);
+						target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+						if (target.length) {
+							$('html, body').animate({
+								scrollTop: target.offset().top
+							}, 1000);
+							return false;
+						}
+					}
+				});
+			});
 
-	    </script>
+		</script>
 
 	</head>
 
@@ -75,7 +75,7 @@
 		<div class="container-fluid">
 		<div class="row">
 
-		    <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar" id="dash">
+			<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar" id="dash">
 
 				<hul class="nav nav-pills flex-column">
 
@@ -109,9 +109,9 @@
 
 				</ul>
 
-		    </nav>
+			</nav>
 
-		    <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+			<main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
 
 				<h2 id="Curriculum">Your Curriculum</h2>
 				<hr>
@@ -142,7 +142,32 @@
 				</nav>
 
 				<div class="col-12">
-					<button class="btn btn-outline-secondary" type="button">Suggest Curriculum</button>
+					<button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#curriculumCard" aria-expanded="false" id="suggest">Suggest Curriculum</button>
+				</div>
+
+				<div class="collapse" id="curriculumCard" style="margin-top:20px;">
+					<div class="card card-body">
+
+					<div class="table-responsive">
+						<table class="table table-striped">
+
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Type</th>
+									<th>Partner</th>
+									<th></th>
+								</tr>
+							</thead>
+
+							<tbody id="curriculumCardInternal">
+
+							</tbody>
+
+						</table>
+					</div>
+
+					</div>
 				</div>
 
 				<hr>
@@ -614,7 +639,7 @@
 
 
 
-		    </main>
+			</main>
 
 		</div>
 		</div>

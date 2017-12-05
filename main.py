@@ -26,9 +26,12 @@ def send_images(path):
 
 @app.route('/plan', methods = ['GET', 'POST'])
 def create_plan():
-	sol = plan("")
+	difficulty = request.args.get('d', 1, type=int)
+	withStudent = request.args.get('s', True, type=bool)
+
+	#sol = plan("")
 	if len(sol) > 0:
-		return '<pre>\n'+''.join(sol)+'</pre>'
+		return ''.join(sol)
 	else:
 		return 'No Plan Found'
 
