@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+
+<html lang="en" class="gr__getbootstrap_com">
+
+	<head>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="ITS">
+		<meta name="author" content="Yochan">
+		<link rel="icon" href="/images/favicon.ico">
+
+		<title>Moo.Student</title>
+
+		<!-- Bootstrap core CSS -->
+		<link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="css/files/dashboard.css" rel="stylesheet">
+		<link href="css/files/custom.css" rel="stylesheet">
+
+	    <script src="js/files/jquery-3.2.1.min.js"></script>
+		<script src="js/main.js"></script>
+
+	    <script type="text/javascript">
+			
+		  	$(function() {
+		  	  $('a[href*="#"]:not([href="#"])').click(function() {
+		  	    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+		  	      var target = $(this.hash);
+		  	      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+		  	      if (target.length) {
+		  	        $('html, body').animate({
+		  	          scrollTop: target.offset().top
+		  	        }, 1000);
+		  	        return false;
+		  	      }
+		  	    }
+		  	  });
+		  	});
+
+	    </script>
+
+	</head>
+
+
+	<body data-gr-c-s-loaded="true" style="position: relative;" data-spy="scroll" data-target="#dash" data-offset="100">
+
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+
+			<a class="navbar-brand" href="#TODOs"><span style="color: #ff6161; font-weight: bold;">Moo.</span></a>
+			<button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+				<ul class="navbar-nav mr-auto">
+
+					<li class="nav-item">
+						<a class="nav-link" href="./files/html/about.html">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="./files/html/help.html">Help</a>
+					</li>
+	
+				</ul>
+
+			</div>
+
+			<span class="badge badge-warning">Student View</span>
+
+		</nav>
+
+		<div class="container-fluid">
+		<div class="row">
+
+		    <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar" id="dash">
+
+				<hul class="nav nav-pills flex-column">
+
+					<li class="nav-item">
+						<a class="nav-link active" href="#Curriculum">Your Curriculum <span class="sr-only">(current)</span></a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#ClassContents">Class Contents</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#Team">Your Team</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#Classmates">Your Classmates</a>
+					</li>
+
+				</ul>
+
+				<ul class="nav nav-pills flex-column" style="background-color: white; margin-top: 20px;">
+
+					<li class="nav-item">
+						<a class="nav-link" href="http://planning.domains/" target="_blank">planning.domains</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="http://editor.planning.domains/" target="_blank">editor.planning.domains</a>
+					</li>
+
+				</ul>
+
+		    </nav>
+
+		    <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+
+				<h2 id="Curriculum">Your Curriculum</h2>
+				<hr>
+
+				<div class="col-12">
+					<button class="btn btn-outline-secondary" type="button">Suggest Curriculum</button>
+				</div>
+
+				<hr>
+				<h2 id="ClassContents">Class Content</h2>
+				<hr>
+
+				<nav aria-label="breadcrumb" role="navigation">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Class</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Tutorials</li>
+					</ol>
+				</nav>
+
+				<div class="table-responsive">
+					<table class="table table-striped">
+
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Prerequisites</th>
+								<th>Description</th>
+								<th class="text-muted">Links</th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+							<tr>
+							<td>T0</td>
+							<td>STRIPS</td>
+							<td>--</td>
+							<td>
+								This language is the base for most of the languages for expressing automated planning problem instances in use today; such languages are commonly known as action languages.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial0.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T1</td>
+							<td>State Representation</td>
+							<td>T0</td>
+							<td>
+								Learning to describe the state of the world using propositions. Propositional variables are the basic building-blocks of propositional formulas, used in propositional logic and higher logics.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial1.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T2</td>
+							<td>Action Representation</td>
+							<td>T1</td>
+							<td>
+								Learn how to write definition of actions or operators available to an AI agent. <br><strong> + formatting of domain.pddl </strong>
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial2.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T3</td>
+							<td>Start / Goal State</td>
+							<td>T1</td>
+							<td>
+								Learn how to write definition of start and goal states. <br><strong> + formatting of problem.pddl </strong>
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial3.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T4</td>
+							<td>Negative Conditions</td>
+							<td>T1</td>
+							<td>
+								Learn to use negative prepositions to describe conditions that need to be false.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial4.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T5</td>
+							<td>Action Costs</td>
+							<td>T2, T3</td>
+							<td>
+								Assign cost to actions.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial5.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T6</td>
+							<td>Typing</td>
+							<td>T2, T3</td>
+							<td>
+								Learn how to represent parameters to actions in the form of types. This will allow you to significantly reduce the size of domains that you write.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial6.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T7</td>
+							<td>Equality</td>
+							<td>T2</td>
+							<td>
+								Compare values of variables in the preconditions.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial7.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T8</td>
+							<td>Functions</td>
+							<td>T5</td>
+							<td>
+								Learn how to use numeric-valued fluents or functions. You will see how action costs are a special version of these.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial8.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T9</td>
+							<td>ADL</td>
+							<td>T6, T8</td>
+							<td>
+								Learn how to write complicated logical formulas in preconditions and effects using quantifiers.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial9.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T10</td>
+							<td>Conditional Effects</td>
+							<td>T6, T7, T8</td>
+							<td>
+								Assign conditions under which effects of actions will transpire. This allows more concise domain definitions.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial10.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T11</td>
+							<td>Domain Axioms</td>
+							<td>T4, T7</td>
+							<td>
+								Learn how to describe environmental conditions that need to be maintained.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial11.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+							<tr>
+							<td>T12</td>
+							<td>Temporal Constraints</td>
+							<td>T8</td>
+							<td>
+								Assign duration to actions.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-success" onClick="window.open('./files/html/tutorials/Tutorial12.html', '_blank')">Learn!</button>
+							</td>
+							</tr>
+
+
+						</tbody>
+
+					</table>
+				</div>
+
+
+				<nav aria-label="breadcrumb" role="navigation">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Class</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Activities</li>
+					</ol>
+				</nav>
+
+
+				<div class="table-responsive">
+					<table class="table table-striped">
+
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Prerequisites</th>
+								<th>Description</th>
+								<th class="text-muted">Links</th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+
+							<tr>
+							<td>A0</td>
+							<td>FreeCell</td>
+							<td>T2, T3</td>
+							<td>
+								It is the familiar solitaire game found on many computers, involving moving cards from an initial tableau, constrained by tight restrictions, to achieve a final suit-sorted collection of stacks.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-primary">Attempt!</button>
+							</td>
+							</tr>
+
+
+							<tr>
+							<td>A1</td>
+							<td>Depot</td>
+							<td>T5, T6</td>
+							<td>
+								This domain was devised in order to see what would happen if two previously well-researched domains were joined together. These were the logistics and blocks domains. They are combined to form a domain in which trucks can transport crates around and then the crates must be stacked onto pallets at their destinations. The stacking is achieved using hoists, so the stacking problem is like a blocks-world problem with hands. Trucks can behave like "tables", since the pallets on which crates are stacked are limited.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-primary">Attempt!</button>
+							</td>
+							</tr>
+
+
+							<tr>
+							<td>A2</td>
+							<td>DriverLog</td>
+							<td>T8</td>
+							<td>
+								This domain involves driving trucks around delivering packages between locations. The complication is that the trucks require drivers who must walk between trucks in order to drive them. The paths for walking and the roads for driving form different maps on the locations.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-primary">Attempt!</button>
+							</td>
+							</tr>
+
+
+							<tr>
+							<td>A3</td>
+							<td>ZenoTravel</td>
+							<td>T11</td>
+							<td>
+								The final transportation domain involves transporting people around in planes, using different modes of movement: fast and slow. The key to this domain is that, where the expressive power of the numeric tracks is used, the fast movement consumes fuel faster than slow movement, making the search for a good quality plan (one using less fuel) much harder.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-primary">Attempt!</button>
+							</td>
+							</tr>
+
+
+							<tr>
+							<td>A4</td>
+							<td>Satellite</td>
+							<td>T9, T10</td>
+							<td>
+								The first of the domains inspired by space-applications. It involves planning and scheduling a collection of observation tasks between multiple satellites, each equipped in slightly different ways.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-primary">Attempt!</button>
+							</td>
+							</tr>
+
+
+							<tr>
+							<td>A5</td>
+							<td>Rover</td>
+							<td>T12</td>
+							<td>
+								Inspired by planetary rovers problems, this domain requires that a collection of rovers navigate a planet surface, finding samples and communicating them back to a lander.
+							</td>
+							<td>
+								<button type="button" class="btn btn-outline-primary">Attempt!</button>
+							</td>
+							</tr>
+
+
+						</tbody>
+
+					</table>
+				</div>
+
+
+				<hr>
+				<h2 id="Team">Your Team</h2>
+				<hr>
+
+				<section class="row text-center placeholders">
+
+					<div class="col-6 col-sm-3 placeholder">
+						<img src="/images/blank-profile.png" width="200" height="200" class="img-fluid rounded-circle prof-pic">
+						<h4 class="name">Jerry</h4>
+						<div class="btn-group btn-block" role="group">
+							<button type="button" class="btn btn-sm btn-success">Status</button>
+							<button type="button" class="btn btn-sm btn-info">Progress</button>
+							<button type="button" class="btn btn-sm btn-block btn-dark">Chat</button>
+						</div>
+					</div>
+
+					<div class="col-6 col-sm-3 placeholder">
+						<img src="/images/blank-profile.png" width="200" height="200" class="img-fluid rounded-circle prof-pic">
+						<h4 class="name">Elaine</h4>
+						<div class="btn-group btn-block" role="group">
+							<button type="button" class="btn btn-sm btn-success">Status</button>
+							<button type="button" class="btn btn-sm btn-info">Progress</button>
+							<button type="button" class="btn btn-sm btn-block btn-dark">Chat</button>
+						</div>
+					</div>
+
+					<div class="col-6 col-sm-3 placeholder">
+						<img src="/images/blank-profile.png" width="200" height="200" class="img-fluid rounded-circle prof-pic">
+						<h4 class="name">George</h4>
+						<div class="btn-group btn-block" role="group">
+							<button type="button" class="btn btn-sm btn-success">Status</button>
+							<button type="button" class="btn btn-sm btn-info">Progress</button>
+							<button type="button" class="btn btn-sm btn-block btn-dark">Chat</button>
+						</div>
+					</div>
+
+				</section>
+
+				<hr>
+				<h2 id="Classmates">Your Classmates</h2>
+				<hr>
+
+				<div class="card card-body">
+				<div class="row">
+
+					<div class="col-12 filter">
+						<div class="input-group">
+							<span class="input-group-addon">
+								Actitivies Completed
+							</span>
+							<span class="input-group-addon">
+								<input type="checkbox">
+							</span>
+							<input type="text" class="form-control" placeholder="Provide Activity IDs (comma-separated)">
+						</div>
+					</div>
+
+					<div class="col-12 filter">
+						<div class="input-group">
+							<span class="input-group-addon">
+								Activities Selected
+							</span>
+							<span class="input-group-addon">
+								<input type="checkbox">
+							</span>
+							<input type="text" class="form-control" placeholder="Provide Activity IDs (comma-separated)">
+						</div>
+					</div>
+
+					<div class="col-12 filter">
+						<div class="input-group">
+							<span class="input-group-addon">
+								Tutorials Completed
+							</span>
+							<span class="input-group-addon">
+								<input type="checkbox">
+							</span>
+							<input type="text" class="form-control" placeholder="Provide Tutorial IDs (comma-separated)">
+						</div>
+					</div>
+
+					<div class="col-12 filter">
+						<button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#StudentCard" aria-expanded="false">Show Students</button>
+					</div>
+
+
+				</div>		
+				</div>
+
+				<div class="collapse" id="StudentCard">
+					<div class="card card-body">
+
+						<section class="row text-center placeholders">
+			
+							<div class="col-6 col-sm-2 placeholder">
+								<img src="/images/blank-profile.png" width="200" height="200" class="img-fluid rounded-circle prof-pic">
+								<h6 class="name">Newman</h6>
+								<div class="btn-group btn-block" role="group">
+									<button type="button" class="btn btn-sm btn-success">Status</button>
+									<button type="button" class="btn btn-sm btn-info">Progress</button>
+									<button type="button" class="btn btn-sm btn-block btn-dark">Invite</button>
+								</div>
+							</div>
+
+							<div class="col-6 col-sm-2 placeholder">
+								<img src="/images/blank-profile.png" width="200" height="200" class="img-fluid rounded-circle prof-pic">
+								<h6 class="name">Papi</h6>
+								<div class="btn-group btn-block" role="group">
+									<button type="button" class="btn btn-sm btn-success">Status</button>
+									<button type="button" class="btn btn-sm btn-info">Progress</button>
+									<button type="button" class="btn btn-sm btn-block btn-dark">Invite</button>
+								</div>
+							</div>
+
+							<div class="col-6 col-sm-2 placeholder">
+								<img src="/images/blank-profile.png" width="200" height="200" class="img-fluid rounded-circle prof-pic">
+								<h6 class="name">Larry</h6>
+								<div class="btn-group btn-block" role="group">
+									<button type="button" class="btn btn-sm btn-success">Status</button>
+									<button type="button" class="btn btn-sm btn-info">Progress</button>
+									<button type="button" class="btn btn-sm btn-block btn-dark">Invite</button>
+								</div>
+							</div>
+
+							<div class="col-6 col-sm-2 placeholder">
+								<img src="/images/blank-profile.png" width="200" height="200" class="img-fluid rounded-circle prof-pic">
+								<h6 class="name">Babu</h6>
+								<div class="btn-group btn-block" role="group">
+									<button type="button" class="btn btn-sm btn-success">Status</button>
+									<button type="button" class="btn btn-sm btn-info">Progress</button>
+									<button type="button" class="btn btn-sm btn-block btn-dark">Invite</button>
+								</div>
+							</div>
+
+							<div class="col-6 col-sm-2 placeholder">
+								<img src="/images/blank-profile.png" width="200" height="200" class="img-fluid rounded-circle prof-pic">
+								<h6 class="name">Susan</h6>
+								<div class="btn-group btn-block" role="group">
+									<button type="button" class="btn btn-sm btn-success">Status</button>
+									<button type="button" class="btn btn-sm btn-info">Progress</button>
+									<button type="button" class="btn btn-sm btn-block btn-dark">Invite</button>
+								</div>
+							</div>
+
+							<div class="col-6 col-sm-2 placeholder">
+								<img src="/images/blank-profile.png" width="200" height="200" class="img-fluid rounded-circle prof-pic">
+								<h6 class="name">Frank</h6>
+								<div class="btn-group btn-block" role="group">
+									<button type="button" class="btn btn-sm btn-success">Status</button>
+									<button type="button" class="btn btn-sm btn-info">Progress</button>
+									<button type="button" class="btn btn-sm btn-block btn-dark">Invite</button>
+								</div>
+							</div>
+
+							<div class="col-6 col-sm-2 placeholder">
+								<img src="/images/blank-profile.png" width="200" height="200" class="img-fluid rounded-circle prof-pic">
+								<h6 class="name">Morty</h6>
+								<div class="btn-group btn-block" role="group">
+									<button type="button" class="btn btn-sm btn-success">Status</button>
+									<button type="button" class="btn btn-sm btn-info">Progress</button>
+									<button type="button" class="btn btn-sm btn-block btn-dark">Invite</button>
+								</div>
+							</div>
+
+						</section>
+
+					</div>
+				</div>
+
+
+
+
+		    </main>
+
+		</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="js/files/popper.min.js"></script>
+		<script src="js/bootstrap/bootstrap.min.js"></script>
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<script src="js/files/ie10-viewport-bug-workaround.js"></script>
+
+	</body>
+
+</html>
