@@ -1,0 +1,11 @@
+do_tutorial_t1 s1 (9)
+
+do_activity_a1 s1 (1)
+apply c1 s1 a1 (1)
+apply c2 s2 a1 (1)
+done_activity_a1 s1 (0)
+
+do_activity_a2 s1 (1)
+apply c1 s1 a2 (1)
+apply c2 s1 a2 (1)
+done_activity_a2 s1 (0)

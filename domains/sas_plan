@@ -1,0 +1,4 @@
+(define_action_1 t1 a1 typing)
+(define_action_1 t1 a2 equality)
+(define_action_2 t1 a3 action-costs equality)
+; cost = 3 (unit cost)
