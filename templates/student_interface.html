@@ -21,7 +21,6 @@
 		<link href="css/files/custom.css" rel="stylesheet">
 
 	    <script src="js/files/jquery-3.2.1.min.js"></script>
-		<script src="js/main.js"></script>
 
 	    <script type="text/javascript">
 			
@@ -116,6 +115,31 @@
 
 				<h2 id="Curriculum">Your Curriculum</h2>
 				<hr>
+
+				<nav aria-label="breadcrumb" role="navigation">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item" style="color:#ff6161;">Allow other students in your curriculum?</li>
+						<label class="switch">
+						  <input type="checkbox">
+						  <span class="slider round"></span>
+						</label>
+					</ol>
+				</nav>
+
+				<nav aria-label="breadcrumb" role="navigation">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item" style="color:#ff6161;">Set difficulty of curriculum.</li>
+
+							<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+								<div class="btn-group mr-2" role="group" aria-label="First group" style="margin-left: 10px;">
+									<button type="button" class="btn btn-secondary btn-sm difficulty" name="1">Beginner</button>
+									<button type="button" class="btn btn-outline-secondary btn-sm difficulty" name="1">Intermediate</button>
+									<button type="button" class="btn btn-outline-secondary btn-sm difficulty" name="1">Advanced</button>
+								</div>
+							</div>
+
+					</ol>
+				</nav>
 
 				<div class="col-12">
 					<button class="btn btn-outline-secondary" type="button">Suggest Curriculum</button>
@@ -602,6 +626,7 @@
 		<script src="js/bootstrap/bootstrap.min.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<script src="js/files/ie10-viewport-bug-workaround.js"></script>
+		<script src="js/global.js"></script>
 
 	</body>
 
