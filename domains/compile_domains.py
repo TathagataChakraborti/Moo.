@@ -111,10 +111,21 @@ def write_fwd_files(difficulty_option, student_option):
 	for student in students.keys():
 		if student_option or student == student_ID:
 			goal_string += '(not (lock {}))\n'.format(student)
+	
+	temp_concepts = []
+	if difficulty_option == 1:
+		temp_concepts = ['typing', 'action-costs']
+	elif difficulty_option == 2:
+		temp_concepts = ['typing', 'action-costs', 'temporal-constraints']
+	else:
+		temp_concepts = ['typing', 'action-costs', 'conditional-effects']
 
-	for concept in concepts:
-		if random.random() < difficulty_option * 0.3 / 2:
-			goal_string += '(used_concept {} {})\n'.format(student_ID, concept)
+	for concept in temp_concepts:
+		goal_string += '(used_concept {} {})\n'.format(student_ID, concept)
+
+	#for concept in concepts:
+	#	if random.random() < difficulty_option * 0.3 / 2:
+	#		goal_string += '(used_concept {} {})\n'.format(student_ID, concept)
 
 	problem_template = problem_template.replace('{G}', goal_string.strip())
 
