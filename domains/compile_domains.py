@@ -5,7 +5,7 @@ packages
 '''
 
 import openpyxl as xl
-import argparse, sys
+import argparse, sys, random
 
 '''
 global variables 
@@ -31,7 +31,7 @@ action_done_activity = '(:action done_activity_{}\n:parameters (?s - student)\n:
 method :: cache xlxs 
 note   :: change with call to DB
 '''
-def cache(filename = '../data/student_data.xlsx'):
+def cache(filename = 'data/student_data.xlsx'):
 
 	def read_sheet(sheet_name, min_row, max_col, max_row):
 
@@ -52,7 +52,7 @@ def cache(filename = '../data/student_data.xlsx'):
 
 	students   = read_sheet('Students', 2, 8, 6)
 	tutorials  = read_sheet('Tutorials', 2, 5, 14)
-	activities = read_sheet('Activities', 2, 5, 7)
+	activities = read_sheet('Activities', 2, 4, 7)
 
 '''
 method :: write act files
@@ -63,7 +63,7 @@ def write_act_files():
 '''
 method :: write fwd files
 '''
-def write_fwd_files():
+def write_fwd_files(difficulty_option, student_option):
 
 	print 'Writing FWD files...'
 
@@ -71,10 +71,13 @@ def write_fwd_files():
 	cache()
 
 	# write problem file
-	with open('problem-fwd-template.pddl', 'r') as template:
+	with open('domains/problem-fwd-template.pddl', 'r') as template:
 		problem_template = template.read()
 
-	problem_template = problem_template.replace('{S}', ' '.join(students.keys()))
+	if student_option:
+		problem_template = problem_template.replace('{S}', ' '.join(students.keys()))
+	else:
+		problem_template = problem_template.replace('{S}', student_ID)		
 
 	concepts = set()
 
@@ -93,29 +96,33 @@ def write_fwd_files():
 
 		for item in students[student]['Tutorials Completed'].strip().split(','):
 			if item.strip() != 'None':
-				init_string += '(done {} {})\n'.format(student, item.strip())
+				if student_option or student == student_ID:
+					init_string += '(done {} {})\n'.format(student, item.strip())
 
 		for item in students[student]['Activities Completed'].strip().split(','):
 			if item.strip() != 'None':
-				init_string += '(done {} {})\n'.format(student, item.strip())
+				if student_option or student == student_ID:
+					init_string += '(done {} {})\n'.format(student, item.strip())
 
 	problem_template = problem_template.replace('{I}', init_string.strip())
 
 	goal_string = ''
 
 	for student in students.keys():
-		goal_string += '(not (lock {}))\n'.format(student)
+		if student_option or student == student_ID:
+			goal_string += '(not (lock {}))\n'.format(student)
 
 	for concept in concepts:
-		goal_string += '(used_concept {} {})\n'.format(student_ID, concept)
+		if random.random() < difficulty_option * 0.3 / 2:
+			goal_string += '(used_concept {} {})\n'.format(student_ID, concept)
 
 	problem_template = problem_template.replace('{G}', goal_string.strip())
 
-	with open('problem-fwd.pddl', 'w') as template:
+	with open('domains/problem-fwd.pddl', 'w') as template:
 		template.write(problem_template)
 
 	# write domain file
-	with open('domain-fwd-template.pddl', 'r') as template:
+	with open('domains/domain-fwd-template.pddl', 'r') as template:
 		domain_template = template.read()
 
 	action_string = ''
@@ -172,7 +179,7 @@ def write_fwd_files():
 
 		action_string += new_action
 
-	with open('domain-fwd.pddl', 'w') as template:
+	with open('domains/domain-fwd.pddl', 'w') as template:
 		template.write(domain_template.format(action_string))
 
 	print 'Done.'
@@ -196,7 +203,7 @@ def main():
     args = parser.parse_args()
 
     if args.user == 'fwd':
-    	write_fwd_files()
+    	write_fwd_files(args.difficulty, args.student)
     else:
 		write_act_files()
 

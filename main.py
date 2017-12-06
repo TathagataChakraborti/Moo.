@@ -1,5 +1,9 @@
 from flask import Flask, request, send_from_directory, render_template
 from interface import plan, explain
+import sys
+sys.path.insert(0, 'domains')
+sys.path.insert(0, 'data')
+from compile_domains import *
 
 app = Flask(__name__, static_url_path='')
 
@@ -28,8 +32,10 @@ def send_images(path):
 def create_plan():
 	difficulty = request.args.get('d', 1, type=int)
 	withStudent = request.args.get('s', True, type=bool)
-
-	#sol = plan("")
+	write_fwd_files(difficulty, withStudent)
+	print "starting planning"
+	sol = plan("domains/domain-fwd.pddl", "domains/problem-fwd.pddl")
+	print sol
 	if len(sol) > 0:
 		return ''.join(sol)
 	else:

@@ -1,8 +1,9 @@
 import subprocess
 import re
 
-def plan(domain):
-	command = 'python fd/fast-downward.py fd/misc/tests/benchmarks/gripper/prob01.pddl --translate-options --full-encoding --search-options --search astar(ff())'
+def plan(domain, problem):
+	command = 'python fd/fast-downward.py '+ domain + ' ' + problem +' --search-options --search astar(ff())'
+	print command
 	command = command.split()
 	pattern = re.compile('\(\\d+\)')
 	sol = []

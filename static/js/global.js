@@ -1,7 +1,15 @@
 $(function(){
+	var difficultyValue = 1;
 	$("#suggest").click(function(){
+		var difficulty = difficultyValue;
+		var student = $('#allow-students').prop('checked');
+		console.log("values ", difficulty, " ", student);
 		$.ajax({
 			method: "POST",
+			data: {
+				'd': difficulty,
+				's': student
+			},
 			url: "plan"
 		}).done(function(msg){
 			if(msg != "No Plan Found")
@@ -9,6 +17,8 @@ $(function(){
 		});
 	});
 	$('.difficulty').click(function( event ) {
+		difficultyValue = $(this).prop('value');
+		console.log("difficultyValue changed", difficultyValue);
 
 		if ($(this).hasClass("btn-secondary")) {
 
