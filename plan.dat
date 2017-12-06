@@ -1,0 +1,5 @@
+define_action_1_t1 a1 action-costs
+define_action_1_t1 a2 equality
+define_action_1_t2 a1 typing
+define_action_1_t1 a3 action-costs
+define_action_1_t1 a3 equality

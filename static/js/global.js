@@ -1,19 +1,49 @@
 $(function(){
 	var difficultyValue = 1;
 	$("#suggest").click(function(){
+		$("#loading").show();
 		var difficulty = difficultyValue;
 		var student = $('#allow-students').prop('checked');
 		console.log("values ", difficulty, " ", student);
+		var data = {
+			'd': difficulty,
+			's': student
+		};
 		$.ajax({
 			method: "POST",
-			data: {
-				'd': difficulty,
-				's': student
+			data: JSON.stringify(data, null, '\t'),
+			contentType: 'application/json;charset=UTF-8',
+			url: "plan",
+			success: function(msg){
+				$("#loading").hide();
+				makeTable(msg)
 			},
-			url: "plan"
+			error: function(){
+				$("#loading").hide();
+				$('#curriculumCardInternal').html("Something went wrong!")
+			}
 		}).done(function(msg){
 			if(msg != "No Plan Found")
 				makeTable(msg);
+		});
+	});
+	
+	$(".modalsuggest").click(function(){
+		var alpha = $(this).prop('value');
+		var data = {
+			'a': alpha
+		};
+		$.ajax({
+			method: "POST",
+			data: JSON.stringify(data, null, '\t'),
+			url: "explain",
+			contentType: 'application/json;charset=UTF-8',
+			success: function(msg){
+				modalSuggest(msg);
+			},
+			error: function(){
+				$('#curriculumCardInternal-2').html("Something went wrong!");
+			}
 		});
 	});
 	$('.difficulty').click(function( event ) {
@@ -49,7 +79,7 @@ $(function(){
 
 		for (var i = 0; i < plan_blob.length; i++) {
 
-			if (plan_blob[i].slice(0,2) === 'do') {
+			if (plan_blob[i].slice(0,3) === 'do_') {
 
 				id   = plan_blob[i].split('_')[2].split(' ')[0].toUpperCase();
 				type = capitalize(plan_blob[i].split('_')[1]);
@@ -66,8 +96,38 @@ $(function(){
 		}
 
 		$('#curriculumCardInternal').html(temp_blob);
+		$('#curriculumCard').show();
+	};
 
-		};
+	//$('.modalsuggest').click(function() {
+	var modalSuggest = function(expl_blob){
+		//plan_blob = 'define_action_1_t1 a1 action-costs\ndefine_action_1_t1 a2 equality\ndefine_action_1_t2 a1 typing\ndefine_action_1_t1 a3 action-costs\ndefine_action_1_t1 a3 equality'
+		//expl_blob = 'Explanation >> has-initial-state-has_concept typing'
+
+		row_blob  = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td><button type="button" class="btn btn-outline-danger" onClick="window.open("{3}", "_blank")">Link</button></td></tr>';
+
+		temp_blob = ''
+
+		if ( expl_blob !== '' ) {
+
+				if ( $('#allow-students-2').prop('checked') ) {
+
+					temp_blob += row_blob.replace('{0}', 'T6').replace('{1}', 'Tutorial').replace('{2}', 'S3');
+
+				} else {
+
+					temp_blob += row_blob.replace('{0}', 'T6').replace('{1}', 'Tutorial').replace('{2}', '--');
+
+				}
+
+		}
+
+		temp_blob += row_blob.replace('{0}', 'A0').replace('{1}', 'Activity').replace('{2}', '--');
+
+		$('#curriculumCardInternal-2').html(temp_blob);
+		$('#curriculumCard-2').show();
+
+	};
 
 	function capitalize(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);

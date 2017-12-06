@@ -4,6 +4,7 @@ import sys
 sys.path.insert(0, 'domains')
 sys.path.insert(0, 'data')
 from compile_domains import *
+import json
 
 app = Flask(__name__, static_url_path='')
 
@@ -30,8 +31,10 @@ def send_images(path):
 
 @app.route('/plan', methods = ['GET', 'POST'])
 def create_plan():
-	difficulty = request.args.get('d', 1, type=int)
-	withStudent = request.args.get('s', True, type=bool)
+	data = json.loads(request.get_data())
+	difficulty = int(data['d'])
+	withStudent = bool(data['s'])
+	print difficulty, withStudent
 	write_fwd_files(difficulty, withStudent)
 	print "starting planning"
 	sol = plan("domains/domain-fwd.pddl", "domains/problem-fwd.pddl")
@@ -41,5 +44,14 @@ def create_plan():
 	else:
 		return 'No Plan Found'
 
-#if __name__ = "__main__":
-#	app.run()
+@app.route('/explain', methods=['GET', 'POST'])
+def get_explanation():
+	data = json.loads(request.get_data())
+	alpha = data['a']
+	print alpha
+	sol = explain(alpha)
+	print sol
+	return ''.join(sol)
+
+if __name__ == "__main__":
+	app.run(threaded=True, host='0.0.0.0', port=5555)

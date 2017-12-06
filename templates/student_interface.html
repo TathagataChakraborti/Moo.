@@ -142,10 +142,10 @@
 				</nav>
 
 				<div class="col-12">
-					<button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#curriculumCard" aria-expanded="false" id="suggest">Suggest Curriculum</button>
+					<button class="btn btn-outline-secondary" type="button" id="suggest">Suggest Curriculum</button>
 				</div>
 
-				<div class="collapse" id="curriculumCard" style="margin-top:20px;">
+				<div id="curriculumCard" style="margin-top:20px; display:none;">
 					<div class="card card-body">
 
 					<div class="table-responsive">
@@ -159,12 +159,12 @@
 									<th></th>
 								</tr>
 							</thead>
-
 							<tbody id="curriculumCardInternal">
 
 							</tbody>
 
 						</table>
+						<span id="loading" style="display:none;"><img width="64px" src="/images/loading.gif"/></span>
 					</div>
 
 					</div>
@@ -374,7 +374,7 @@
 							<tr>
 								<th>ID</th>
 								<th>Name</th>
-								<th>Prerequisites</th>
+								<th>Concepts</th>
 								<th>Description</th>
 								<th class="text-muted">Links</th>
 							</tr>
@@ -386,12 +386,12 @@
 							<tr>
 							<td>A0</td>
 							<td>FreeCell</td>
-							<td>T2, T3</td>
+							<td>strips, propositions, operators, states, action-costs, typing</td>
 							<td>
 								It is the familiar solitaire game found on many computers, involving moving cards from an initial tableau, constrained by tight restrictions, to achieve a final suit-sorted collection of stacks.
 							</td>
 							<td>
-								<button type="button" class="btn btn-outline-primary">Attempt!</button>
+								<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Attempt!</button>
 							</td>
 							</tr>
 
@@ -399,7 +399,7 @@
 							<tr>
 							<td>A1</td>
 							<td>Depot</td>
-							<td>T5, T6</td>
+							<td>functions, negative-conditions, equality</td>
 							<td>
 								This domain was devised in order to see what would happen if two previously well-researched domains were joined together. These were the logistics and blocks domains. They are combined to form a domain in which trucks can transport crates around and then the crates must be stacked onto pallets at their destinations. The stacking is achieved using hoists, so the stacking problem is like a blocks-world problem with hands. Trucks can behave like "tables", since the pallets on which crates are stacked are limited.
 							</td>
@@ -412,7 +412,7 @@
 							<tr>
 							<td>A2</td>
 							<td>DriverLog</td>
-							<td>T8</td>
+							<td>adl, conditional-effects</td>
 							<td>
 								This domain involves driving trucks around delivering packages between locations. The complication is that the trucks require drivers who must walk between trucks in order to drive them. The paths for walking and the roads for driving form different maps on the locations.
 							</td>
@@ -425,7 +425,7 @@
 							<tr>
 							<td>A3</td>
 							<td>ZenoTravel</td>
-							<td>T11</td>
+							<td>adl, domain-axioms, conditional-effects</td>
 							<td>
 								The final transportation domain involves transporting people around in planes, using different modes of movement: fast and slow. The key to this domain is that, where the expressive power of the numeric tracks is used, the fast movement consumes fuel faster than slow movement, making the search for a good quality plan (one using less fuel) much harder.
 							</td>
@@ -438,7 +438,7 @@
 							<tr>
 							<td>A4</td>
 							<td>Satellite</td>
-							<td>T9, T10</td>
+							<td>conditional-effects</td>
 							<td>
 								The first of the domains inspired by space-applications. It involves planning and scheduling a collection of observation tasks between multiple satellites, each equipped in slightly different ways.
 							</td>
@@ -451,7 +451,7 @@
 							<tr>
 							<td>A5</td>
 							<td>Rover</td>
-							<td>T12</td>
+							<td>temporal-constraints</td>
 							<td>
 								Inspired by planetary rovers problems, this domain requires that a collection of rovers navigate a planet surface, finding samples and communicating them back to a lander.
 							</td>
@@ -642,6 +642,68 @@
 			</main>
 
 		</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Suggest Curriculum</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<nav aria-label="breadcrumb" role="navigation">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item" style="color:#ff6161;">Allow other students in your curriculum?</li>
+								<label class="switch">
+								  <input id="allow-students-2" type="checkbox">
+								  <span class="slider round"></span>
+								</label>
+							</ol>
+						</nav>
+
+
+						<div class="col-12">
+							<button class="btn btn-outline-secondary modalsuggest" type="button" value="0">&lt;&lt; Less Advanced</button>
+							<button class="btn btn-outline-secondary modalsuggest" type="button" value="1">More Advanced &gt;&gt;</button>
+						</div>
+
+						<div id="curriculumCard-2" style="margin-top:20px;display:none;">
+							<div class="card card-body">
+
+							<div class="table-responsive">
+								<table class="table table-striped">
+
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Type</th>
+											<th>Partner</th>
+											<th></th>
+										</tr>
+									</thead>
+
+									<tbody id="curriculumCardInternal-2">
+
+									</tbody>
+
+								</table>
+							</div>
+
+							</div>
+						</div>
+
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<!-- Bootstrap core JavaScript
