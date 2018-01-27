@@ -29,40 +29,44 @@ linear exponential epidemic - schema
 (is_part ?n - node ?s - schema)
 )
 
+(:functions
+	(total-cost)
+)
+
 (:action fill_property_description
 	:parameters (?d - description ?n - node)
 	:precondition (init ?n)
-	:effect (is_filled ?d ?n)
+	:effect (and (is_filled ?d ?n) (increase total-cost 1))
 )
 
 (:action fill_property_type
 	:parameters (?d - description ?t - type)
 	:precondition (is_filled ?d)
-	:effect (is_filled ?t ?n)
+	:effect (and (is_filled ?t ?n) (increase total-cost 1))
 )
 
 (:action fill_property_value
 	:parameters (?t - type ?v - value ?a - a)
 	:precondition (and (is_filled ?t) not(is_node_equation ?n - node))
-	:effect (is_filled ?p ?n)
+	:effect (and (is_filled ?p ?n) (increase total-cost 1))
 )
 
 (:action fill_property_units
 	:parameters (?v - value ?u - units ?n-node)
 	:precondition (is_filled ?v ?n)
-	:effect (is_filled ?u ?n)
+	:effect (and (is_filled ?u ?n) (increase total-cost 1))
 )
 
 (:action fill_property_equation
 	:parameters (?u - units ?e - equation ?n - node)
 	:precondition (and (is_filled ?u ?n) not(is_node_parameter ?n))
-	:effect (is_filled ?u ?n)
+	:effect (and (is_filled ?u ?n) (increase total-cost 1))
 )
 
 (:action create_node
 	:parameter (?n - node)
 	:precondition ()
-	:effect (init ?n)
+	:effect (and (init ?n) (increase total-cost 1))
 )
 
 (:action complete_node
@@ -72,13 +76,13 @@ linear exponential epidemic - schema
 						(or (is_filled ?v ?n) (is_node_function ?n))
 						(is_filled ?u ?n)
 						(or (is_filled ?e) (is_node_parameter ?n)))
-	:effect (is_complete ?n)
+	:effect (and (is_complete ?n) (increase total-cost 0))
 	)
 )
 
 (:action complete_schema
 	:parameter (?n - node ?s - schema)
 	:precondition (and (is_part ?n ?s) (is_complete ?n))
-	:effect (applied_schema ?s)
+	:effect (and (applied_schema ?s) (increase total-cost 0))
 )
 )
