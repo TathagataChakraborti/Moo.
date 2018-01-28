@@ -5,7 +5,9 @@
 property node schema - object
 description type value equation units - property
 accumulator function parameter - node
-linear exponential epidemic - schema
+linear exponential epidemic capacity interaction - schema
+extended_exponential - exponential
+population_interaction - interaction
 )
 
 (:predicates
@@ -15,6 +17,11 @@ linear exponential epidemic - schema
 (has_property ?p - property ?n - node)
 (applied_schema ?s - schema)
 (applied_epidemic_schema ?p1 ?p2 - parameter ?f1 ?f2 ?f3 - function ?a1 ?a2 - accumulator)
+(applied_exponential_schema ?p - parameter ?f - function ?a - accumulator)
+(applied_extended_exponential_schema ?f1 ?f2 - function ?a - accumulator)
+(applied_capacity_schema ?p - parameter ?f - function)
+(applied_interaction_schema ?p1 ?p2 - parameter ?f1 ?f2 - function ?a1 ?a2 - accumulator)
+(applied_linear_schema ?p - parameter ?a - accumulator)
 (is_part ?n - node ?s - schema)
 )
 
@@ -99,7 +106,7 @@ linear exponential epidemic - schema
 					(is_part ?a ?s)
 					(is_complete ?a)
 				)
-	:effect (and (applied_schema ?s))
+	:effect (and (applied_schema ?s) (applied_linear_schema ?p ?a))
 )
 
 (:action complete_exponential_schema
@@ -112,7 +119,50 @@ linear exponential epidemic - schema
 					(is_part ?a ?s)
 					(is_complete ?a)
 				)
-	:effect (and (applied_schema ?s))
+	:effect (and (applied_schema ?s) (applied_exponential_schema ?p ?f ?a))
+)
+
+(:action complete_extended_exponential_schema
+	:parameters (?f1 ?f2 - function ?a - accumulator ?s - extended_exponential)
+	:precondition (and
+					(is_part ?f1 ?s)
+					(is_complete ?f1)
+					(is_part ?f2 ?s)
+					(is_complete ?f2)
+					(is_part ?a ?s)
+					(is_complete ?a)
+				)
+	:effect (and (applied_schema ?s) (applied_extended_exponential_schema ?f1 ?f2 ?a))
+)
+
+(:action complete_capacity_schema
+	:parameters (?p - parameter ?f - function ?s - capacity)
+	:precondition (and
+					(is_part ?p ?s)
+					(is_complete ?p)
+					(is_part ?f ?s)
+					(is_complete ?f)
+				)
+	:effect (and (applied_schema ?s) (applied_capacity_schema ?p ?f))
+)
+
+(:action complete_interaction_schema
+	:parameters (?p1 ?p2 - parameter ?f1 ?f2 - function ?a1 ?a2 - accumulator ?s - interaction)
+	:precondition (and
+					(is_part ?p1 ?s)
+					(is_part ?p2 ?s)
+					(is_complete ?p1)
+					(is_complete ?p2)
+					(is_part ?f1 ?s)
+					(is_part ?f2 ?s)
+					(is_complete ?f1)
+					(is_complete ?f2)
+					(is_part ?a1 ?s)
+					(is_part ?a2 ?s)
+					(is_complete ?a1)
+					(is_complete ?a2)
+				)
+	:effect (and (applied_schema ?s) (applied_interaction_schema ?p1 ?p2 ?f1 ?f2 ?a1 ?a2))
 )
 
 (:action complete_epidemic_schema
