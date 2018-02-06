@@ -15,7 +15,7 @@ s1 s2 - student
 (contains_concept t4 capacity)
 (contains_concept t5 epidemic)
 (contains_concept t6 interaction)
-(contains_concept rabbit linear)
+(contains_concept rabbit exponential)
 (contains_concept isle1 linear)
 (contains_concept isle2 exponential)
 (contains_concept isle3 exponential)
