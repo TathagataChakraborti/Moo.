@@ -1,11 +1,11 @@
-(define (problem class2)
+(define (problem class3)
 (:domain dragoon-class)
 
 (:objects 
 linear exponential extended_exponential capacity epidemic interaction - concept
 t1 t2 t3 t4 t5 t6 - tutorial 
 rabbit isle1 isle2 isle3 isle4 isle5 isle6 epic - assignment
-s1 s2 s3 - student
+s1 s2 s3 s4 - student
 )
 
 (:init
@@ -29,9 +29,6 @@ s1 s2 s3 - student
 (contains_concept isle6 capacity)
 (contains_concept isle6 interaction)
 (contains_concept epic epidemic)
-;(applied_concept s2 linear)
-;(applied_concept s2 exponential)
-
 )
 
 (:goal
@@ -54,6 +51,12 @@ s1 s2 s3 - student
 (applied_concept s3 capacity)
 (applied_concept s3 interaction)
 (applied_concept s3 epidemic)
+(applied_concept s4 linear)
+(applied_concept s4 exponential)
+(applied_concept s4 extended_exponential)
+(applied_concept s4 capacity)
+(applied_concept s4 interaction)
+(applied_concept s4 epidemic)
 )
 )
 
