@@ -13,7 +13,6 @@ linear exponential extended_exponential capacity epidemic interaction - schema
 (has_schema ?s - student ?c - schema)
 (applied_schema ?s - student ?c - schema)
 (done ?s - student ?q - content)
-;(is_dependent ?q1 ?q2 - schema)
 (completed_assignment_one ?s - student ?a - assignment ?c - schema)
 (completed_assignment_two ?s - student ?a - assignment ?c1 ?c2 - schema)
 (completed_assignment_three ?s - student ?a - assignment ?c1 ?c2 ?c3 - schema)
@@ -77,17 +76,17 @@ linear exponential extended_exponential capacity epidemic interaction - schema
 	)
 )
 
-(:action complete_assignment_one
+(:action finish_assignment_one
 	:parameters (?s - student ?a - one_schema ?c - schema)
 	:precondition (and (contains_schema ?a ?c) (applied_schema ?s ?c) (not (done ?s ?a)))
 	:effect (and
 		(done ?s ?a)
-		(complete_assignment_one ?s ?a ?c)
+		(completed_assignment_one ?s ?a ?c)
 	)
 )
 
-(:action complete_assignment_three
-	:parameters (?s - student ?a - three_schema ?c1 ?c2 ?c3 - schema)
+(:action finish_assignment_two
+	:parameters (?s - student ?a - two_schema ?c1 ?c2 ?c3 - schema)
 	:precondition (and 
 			(contains_schema ?a ?c1)
 			(contains_schema ?a ?c2)
@@ -95,12 +94,12 @@ linear exponential extended_exponential capacity epidemic interaction - schema
 			(applied_schema ?s ?c2)
 	)
 	:effect (and
-			(complete_assignment_two ?s ?a ?c1 ?c2)
+			(completed_assignment_two ?s ?a ?c1 ?c2)
 			(done ?s ?a)
 	)
 )
 
-(:action complete_assignment_three
+(:action finish_assignment_three
 	:parameters (?s - student ?a - three_schema ?c1 ?c2 ?c3 - schema)
 	:precondition (and 
 			(contains_schema ?a ?c1)
@@ -111,13 +110,13 @@ linear exponential extended_exponential capacity epidemic interaction - schema
 			(applied_schema ?s ?c3)
 	)
 	:effect (and
-			(complete_assignment_three ?s ?a ?c1 ?c2 ?c3)
+			(completed_assignment_three ?s ?a ?c1 ?c2 ?c3)
 			(done ?s ?a)
 	)
 )
 
-(:action complete_assignment_three
-	:parameters (?s - student ?a - three_schema ?c1 ?c2 ?c3 ?c4 - schema)
+(:action finish_assignment_four
+	:parameters (?s - student ?a - four_schema ?c1 ?c2 ?c3 ?c4 - schema)
 	:precondition (and 
 			(contains_schema ?a ?c1)
 			(contains_schema ?a ?c2)
@@ -129,7 +128,7 @@ linear exponential extended_exponential capacity epidemic interaction - schema
 			(applied_schema ?s ?c4)
 	)
 	:effect (and
-			(complete_assignment_four ?s ?a ?c1 ?c2 ?c3 ?c4)
+			(completed_assignment_four ?s ?a ?c1 ?c2 ?c3 ?c4)
 			(done ?s ?a)
 	)
 )
