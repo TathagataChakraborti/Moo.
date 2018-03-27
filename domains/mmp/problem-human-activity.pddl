@@ -39,6 +39,7 @@ s1 - student
 (contains_schema isle6 carrying_capacity)
 (contains_schema isle6 predator_prey)
 (contains_schema epic flu)
+;; learner model initial conditions
 )
 
 (:goal

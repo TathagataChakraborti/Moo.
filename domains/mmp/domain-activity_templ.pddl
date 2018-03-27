@@ -1,29 +1,24 @@
-(define (domain dragoon-activity)
+(define (domain dragoon-class-curriculum)
 (:requirements :strips :typing)
 
 (:types
-property node schema - object
-description type value equation units - property
-accumulator function parameter - node
-linear exponential epidemic capacity interaction - schema
-extended_exponential - exponential
-population_interaction - interaction
+student schema content - object
+assignment tutorial - content
+one_schema two_schema three_schema four_schema - assignment
+linear exponential extended_exponential capacity epidemic interaction - schema
 )
 
 (:predicates
-(is_filled ?p - property ?n - node)
-(is_complete ?n - node)
-(init ?n - node)
-(has_property ?p - property ?n - node)
-(applied_schema ?s - schema)
-(applied_epidemic_schema ?p1 ?p2 - parameter ?f1 ?f2 ?f3 - function ?a1 ?a2 - accumulator)
-(applied_exponential_schema ?p - parameter ?f - function ?a - accumulator)
-(applied_extended_exponential_schema ?f1 ?f2 - function ?a - accumulator)
-(applied_capacity_schema ?p - parameter ?f - function)
-(applied_interaction_schema ?p1 ?p2 - parameter ?f1 ?f2 - function ?a1 ?a2 - accumulator)
-(applied_linear_schema ?p - parameter ?a - accumulator)
-(is_part ?n - node ?s - schema)
+(contains_schema ?q - content ?c - schema)
+(has_schema ?s - student ?c - schema)
+(applied_schema ?s - student ?a - assignment ?c - schema)
+(done ?s - student ?q - content)
+(completed_assignment_one ?s - student ?a - assignment ?c - schema)
+(completed_assignment_two ?s - student ?a - assignment ?c1 ?c2 - schema)
+(completed_assignment_three ?s - student ?a - assignment ?c1 ?c2 ?c3 - schema)
+(completed_assignment_four ?s - student ?a - assignment ?c1 ?c2 ?c3 ?c4 - schema)
 )
 
 %OPERATORS%
+
 )

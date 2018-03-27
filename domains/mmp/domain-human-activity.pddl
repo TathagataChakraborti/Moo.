@@ -1,188 +1,140 @@
-(define (domain dragoon-activity)
+(define (domain dragoon-class-curriculum)
 (:requirements :strips :typing)
 
 (:types
-property node schema - object
-description type value equation units - property
-accumulator function parameter - node
-linear exponential epidemic capacity interaction - schema
-extended_exponential - exponential
-population_interaction - interaction
+student schema content - object
+assignment tutorial - content
+one_schema two_schema three_schema four_schema - assignment
+linear exponential extended_exponential capacity epidemic interaction - schema
 )
 
 (:predicates
-(is_filled ?p - property ?n - node)
-(is_complete ?n - node)
-(init ?n - node)
-(has_property ?p - property ?n - node)
-(applied_schema ?s - schema)
-(applied_epidemic_schema ?p1 ?p2 - parameter ?f1 ?f2 ?f3 - function ?a1 ?a2 - accumulator)
-(applied_exponential_schema ?p - parameter ?f - function ?a - accumulator)
-(applied_extended_exponential_schema ?f1 ?f2 - function ?a - accumulator)
-(applied_capacity_schema ?p - parameter ?f - function)
-(applied_interaction_schema ?p1 ?p2 - parameter ?f1 ?f2 - function ?a1 ?a2 - accumulator)
-(applied_linear_schema ?p - parameter ?a - accumulator)
-(is_part ?n - node ?s - schema)
+(contains_schema ?q - content ?c - schema)
+(has_schema ?s - student ?c - schema)
+(applied_schema ?s - student ?a - assignment ?c - schema)
+(done ?s - student ?q - content)
+(completed_assignment_one ?s - student ?a - assignment ?c - schema)
+(completed_assignment_two ?s - student ?a - assignment ?c1 ?c2 - schema)
+(completed_assignment_three ?s - student ?a - assignment ?c1 ?c2 ?c3 - schema)
+(completed_assignment_four ?s - student ?a - assignment ?c1 ?c2 ?c3 ?c4 - schema)
 )
 
-(:action create_node
-    :parameters (?n - node)
-    :precondition (and)
-    :effect (and (init ?n))
+(:action complete_tutorial
+	:parameters (?s - student ?t - tutorial ?c - schema)
+	:precondition (and (contains_schema ?t ?c)); (not (done ?s ?t)))
+	:effect (and
+		(has_schema ?s ?c)
+		(done ?s ?t)
+	)
 )
 
-(:action fill_description
-	:parameters (?p - description ?n - node)
-	:precondition (and (has_property ?p ?n) (init ?n))
-	:effect (and (is_filled ?p ?n))
+(:action apply_schema_linear
+	:parameters (?s - student ?a - assignment ?c - linear)
+	:precondition (and (contains_schema ?a ?c) (has_schema ?s ?c))
+	:effect (and
+			(applied_schema ?s ?a ?c)
+	)
 )
 
-(:action fill_type
-	:parameters (?t - type ?d - description ?n - node)
-	:precondition (and (has_property ?t ?n) (is_filled ?d ?n))
-	:effect (and (is_filled ?t ?n))
+(:action apply_schema_exponential
+	:parameters (?s - student ?a ?a1 - assignment ?c - exponential ?c1 - linear)
+	:precondition (and (contains_schema ?a ?c) (applied_schema ?s ?a1 ?c1) (has_schema ?s ?c))
+	:effect (and
+			(applied_schema ?s ?a ?c)
+	)
 )
 
-(:action fill_value
-	:parameters (?v - value ?t - type ?n - node)
-	:precondition (and (has_property ?v ?n) (is_filled ?t ?n))
-	:effect (and (is_filled ?v ?n))
+(:action apply_schema_extended_exponential
+	:parameters (?s - student ?a ?a1 - assignment ?c - extended_exponential ?c1 - exponential)
+	:precondition (and (contains_schema ?a ?c) (applied_schema ?s ?a1 ?c1) (has_schema ?s ?c))
+	:effect (and
+			(applied_schema ?s ?a ?c)
+	)
 )
 
-(:action fill_units
-	:parameters (?u - units ?t - type ?n - node)
-	:precondition (and (has_property ?u ?n) (is_filled ?t ?n))
-	:effect (and (is_filled ?u ?n))
+(:action apply_schema_epidemic
+	:parameters (?s - student ?a ?a1 - assignment ?c - epidemic ?c1 - extended_exponential)
+	:precondition (and (contains_schema ?a ?c) (applied_schema ?s ?a1 ?c1) (has_schema ?s ?c))
+	:effect (and
+			(applied_schema ?s ?a ?c)
+	)
 )
 
-(:action fill_equation
-	:parameters (?e - equation ?t - type ?n - node)
-	:precondition (and (has_property ?e ?n) (is_filled ?t ?n))
-	:effect (and (is_filled ?e ?n))
+(:action apply_schema_capacity
+	:parameters (?s - student ?a ?a1 - assignment ?c - capacity ?c1 - exponential)
+	:precondition (and (contains_schema ?a ?c) (applied_schema ?s ?a1 ?c1) (has_schema ?s ?c))
+	:effect (and
+			(applied_schema ?s ?a ?c)
+	)
 )
 
-(:action complete_accumulator
-	:parameters (?d - description ?t - type ?v - value ?u - units ?e - equation ?n - accumulator)
+(:action apply_schema_interaction
+	:parameters (?s - student ?a ?a1 - assignment ?c - interaction ?c1 - exponential)
+	:precondition (and (contains_schema ?a ?c) (applied_schema ?s ?a1 ?c1) (has_schema ?s ?c))
+	:effect (and
+			(applied_schema ?s ?a ?c)
+	)
+)
+
+(:action finish_assignment_one
+	:parameters (?s - student ?a - one_schema ?c - schema)
+	:precondition (and (contains_schema ?a ?c) (applied_schema ?s ?a ?c)); (not (done ?s ?a)))
+	:effect (and
+		(done ?s ?a)
+		(completed_assignment_one ?s ?a ?c)
+	)
+)
+
+(:action finish_assignment_two
+	:parameters (?s - student ?a - two_schema ?c1 ?c2 - schema)
 	:precondition (and
-					(init ?n)
-					(is_filled ?d ?n)
-					(is_filled ?t ?n)
-					(is_filled ?v ?n)
-					(is_filled ?u ?n)
-					(is_filled ?e ?n)
-				)
-	:effect (and (is_complete ?n))
+			;(not (done ?s ?a))
+			(contains_schema ?a ?c1)
+			(contains_schema ?a ?c2)
+			(applied_schema ?s ?a ?c1)
+			(applied_schema ?s ?a ?c2)
+	)
+	:effect (and
+			(completed_assignment_two ?s ?a ?c1 ?c2)
+			(done ?s ?a)
+	)
 )
 
-(:action complete_parameter
-	:parameters (?d - description ?t - type ?v - value ?u - units ?n - parameter)
-	:precondition (and
-					(init ?n)
-					(is_filled ?d ?n)
-					(is_filled ?t ?n)
-					(is_filled ?v ?n)
-					(is_filled ?u ?n)
-				)
-	:effect (and (is_complete ?n))
+(:action finish_assignment_three
+	:parameters (?s - student ?a - three_schema ?c1 ?c2 ?c3 - schema)
+	:precondition (and 
+			;(not (done ?s ?a))
+			(contains_schema ?a ?c1)
+			(contains_schema ?a ?c2)
+			(contains_schema ?a ?c3)
+			(applied_schema ?s ?a ?c1)
+			(applied_schema ?s ?a ?c2)
+			(applied_schema ?s ?a ?c3)
+	)
+	:effect (and
+			(completed_assignment_three ?s ?a ?c1 ?c2 ?c3)
+			(done ?s ?a)
+	)
 )
 
-(:action complete_function
-	:parameters (?d - description ?t - type ?u - units ?e - equation ?n - function)
-	:precondition (and
-					(init ?n)
-					(is_filled ?d ?n)
-					(is_filled ?t ?n)
-					(is_filled ?u ?n)
-					(is_filled ?e ?n)
-				)
-	:effect (and (is_complete ?n))
+(:action finish_assignment_four
+	:parameters (?s - student ?a - four_schema ?c1 ?c2 ?c3 ?c4 - schema)
+	:precondition (and 
+			;(not (done ?s ?a))
+			(contains_schema ?a ?c1)
+			(contains_schema ?a ?c2)
+			(contains_schema ?a ?c3)
+			(contains_schema ?a ?c4)
+			(applied_schema ?s ?a ?c1)
+			(applied_schema ?s ?a ?c2)
+			(applied_schema ?s ?a ?c3)
+			(applied_schema ?s ?a ?c4)
+	)
+	:effect (and
+			(completed_assignment_four ?s ?a ?c1 ?c2 ?c3 ?c4)
+			(done ?s ?a)
+	)
 )
 
-(:action complete_linear_schema
-	:parameters (?p - parameter ?a - accumulator ?s - linear)
-	:precondition (and
-					(is_part ?p ?s)
-					(is_complete ?p)
-					(is_part ?a ?s)
-					(is_complete ?a)
-				)
-	:effect (and (applied_schema ?s) (applied_linear_schema ?p ?a))
-)
 
-(:action complete_exponential_schema
-	:parameters (?p - parameter ?f - function ?a - accumulator ?s - exponential)
-	:precondition (and
-					(is_part ?p ?s)
-					(is_complete ?p)
-					(is_part ?f ?s)
-					(is_complete ?f)
-					(is_part ?a ?s)
-					(is_complete ?a)
-				)
-	:effect (and (applied_schema ?s) (applied_exponential_schema ?p ?f ?a))
-)
-
-(:action complete_extended_exponential_schema
-	:parameters (?f1 ?f2 - function ?a - accumulator ?s - extended_exponential)
-	:precondition (and
-					(is_part ?f1 ?s)
-					(is_complete ?f1)
-					(is_part ?f2 ?s)
-					(is_complete ?f2)
-					(is_part ?a ?s)
-					(is_complete ?a)
-				)
-	:effect (and (applied_schema ?s) (applied_extended_exponential_schema ?f1 ?f2 ?a))
-)
-
-(:action complete_capacity_schema
-	:parameters (?p - parameter ?f - function ?s - capacity)
-	:precondition (and
-					(is_part ?p ?s)
-					(is_complete ?p)
-					(is_part ?f ?s)
-					(is_complete ?f)
-				)
-	:effect (and (applied_schema ?s) (applied_capacity_schema ?p ?f))
-)
-
-(:action complete_interaction_schema
-	:parameters (?p1 ?p2 - parameter ?f1 ?f2 - function ?a1 ?a2 - accumulator ?s - interaction)
-	:precondition (and
-					(is_part ?p1 ?s)
-					(is_part ?p2 ?s)
-					(is_complete ?p1)
-					(is_complete ?p2)
-					(is_part ?f1 ?s)
-					(is_part ?f2 ?s)
-					(is_complete ?f1)
-					(is_complete ?f2)
-					(is_part ?a1 ?s)
-					(is_part ?a2 ?s)
-					(is_complete ?a1)
-					(is_complete ?a2)
-				)
-	:effect (and (applied_schema ?s) (applied_interaction_schema ?p1 ?p2 ?f1 ?f2 ?a1 ?a2))
-)
-
-(:action complete_epidemic_schema
-	:parameters (?p1 ?p2 - parameter ?f1 ?f2 ?f3 - function ?a1 ?a2 - accumulator ?s - epidemic)
-	:precondition (and
-					(is_part ?p1 ?s)
-					(is_part ?p2 ?s)
-					(is_complete ?p1)
-					(is_complete ?p2)
-					(is_part ?f1 ?s)
-					(is_part ?f2 ?s)
-					(is_part ?f3 ?s)
-					(is_complete ?f1)
-					(is_complete ?f2)
-					(is_complete ?f3)
-					(is_part ?a1 ?s)
-					(is_part ?a2 ?s)
-					(is_complete ?a1)
-					(is_complete ?a2)
-				)
-	:effect (and (applied_schema ?s) (applied_epidemic_schema ?p1 ?p2 ?f1 ?f2 ?f3 ?a1 ?a2))
-)
 )

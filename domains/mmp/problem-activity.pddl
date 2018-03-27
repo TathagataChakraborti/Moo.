@@ -39,13 +39,13 @@ s1 - student
 (contains_schema isle6 carrying_capacity)
 (contains_schema isle6 predator_prey)
 (contains_schema epic flu)
-(has_schema linear_growth)
 ;; learner model initial conditions
-(has_schema exponential_growth)
-(has_schema exponential_decay)
-(has_schema ee_growth)
-(has_schema carrying_capacity)
-(has_schema predator_prey)
+(has_schema s1 linear_growth)
+(has_schema s1 exponential_growth)
+(has_schema s1 exponential_decay)
+(has_schema s1 ee_growth)
+(has_schema s1 carrying_capacity)
+(has_schema s1 predator_prey)
 )
 
 (:goal
