@@ -1,7 +1,8 @@
 (define (problem isle2)
 (:domain dragoon-activity)
 
-(:objects 
+(:objects
+	s1 - student
 	moose_population - accumulator
 	moose_births - function
 	moose_birth_probability - parameter
@@ -30,11 +31,12 @@
 	(has_property tp moose_birth_probability)
 	(has_property vp moose_birth_probability)
 	(has_property up moose_birth_probability)
+	(has_schema s1 exponential_growth)
 )
 
 (:goal
 	(and
-	(applied_schema exponential_growth)
+	(applied_schema s1 exponential_growth)
 	(applied_exponential_schema moose_birth_probability moose_births moose_population)
 	)
 )

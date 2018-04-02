@@ -2,6 +2,7 @@
 (:domain dragoon-activity)
 
 (:objects 
+	s1 - student
 	moose_population wolf_population - accumulator
 	moose_births moose_deaths moose_death_probability wolf_births wolf_deaths wolf_birth_probability - function
 	moose_birth_probability wolf_death_probability effect_of_moose_on_wolf effect_of_wolf_on_moose - parameter
@@ -84,15 +85,20 @@
 	(has_property tp4 effect_of_wolf_on_moose)
 	(has_property vp4 effect_of_wolf_on_moose)
 	(has_property up4 effect_of_wolf_on_moose)
+	(has_schema s1 exponential_moose_growth)
+	(has_schema s1 exponential_wolf_decay)
+	(has_schema s1 exponential_wolf_growth)
+	(has_schema s1 exponential_moose_decay)
+	(has_schema s1 predator_prey)
 )
 
 (:goal
 	(and
-		(applied_schema exponential_moose_growth)
-		(applied_schema exponential_wolf_growth)
-		(applied_schema exponential_moose_decay)
-		(applied_schema exponential_wolf_decay)
-		(applied_schema predator_prey)
+		(applied_schema s1 exponential_moose_growth)
+		(applied_schema s1 exponential_wolf_growth)
+		(applied_schema s1 exponential_moose_decay)
+		(applied_schema s1 exponential_wolf_decay)
+		(applied_schema s1 predator_prey)
 		(applied_exponential_schema moose_birth_probability moose_births moose_population)
 		(applied_extended_exponential_schema moose_death_probability moose_deaths moose_population)
 		(applied_exponential_schema wolf_death_probability wolf_deaths wolf_population)

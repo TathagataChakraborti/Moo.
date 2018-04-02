@@ -1,7 +1,8 @@
 (define (problem isle5)
 (:domain dragoon-activity)
 
-(:objects
+(:objects 
+	s1 - student
 	wolf_population - accumulator
 	wolf_births wolf_deaths - function
 	wolf_birth_probability wolf_death_probability - parameter
@@ -20,7 +21,7 @@
 	(is_part wolf_birth_probability exponential_growth)
 	(is_part wolf_population exponential_decay)
 	(is_part wolf_deaths exponential_decay)
-	(is_part wolf_death_probability exponential_decay)
+	(is_part wolf_death_probability exponential_decay)	
 	(has_property da wolf_population)
 	(has_property ta wolf_population)
 	(has_property va wolf_population)
@@ -42,12 +43,14 @@
 	(has_property tp2 wolf_death_probability)
 	(has_property vp2 wolf_death_probability)
 	(has_property up2 wolf_death_probability)
+	(has_schema s1 exponential_growth)
+	(has_schema s1 exponential_decay)
 )
 
 (:goal
 	(and
-		(applied_schema exponential_growth)
-		(applied_schema exponential_decay)
+		(applied_schema s1 exponential_growth)
+		(applied_schema s1 exponential_decay)
 		(applied_exponential_schema wolf_birth_probability wolf_births wolf_population)
 		(applied_exponential_schema wolf_death_probability wolf_deaths wolf_population)
 	)

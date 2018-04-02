@@ -1,7 +1,8 @@
 (define (problem isle1)
 (:domain dragoon-activity)
 
-(:objects 
+(:objects
+	s1 - student
 	moose_population - accumulator
 	moose_births - parameter
 	linear_growth - linear
@@ -20,13 +21,17 @@
 	(has_property va moose_population)
 	(has_property ua moose_population)
 	(has_property ea moose_population)
-    (has_property dp moose_births)
-    (has_property tp moose_births)
-    (has_property vp moose_births)
-    (has_property up moose_births)
+	(has_property dp moose_births)
+	(has_property tp moose_births)
+	(has_property vp moose_births)
+	(has_property up moose_births)
+	(has_schema s1 linear_growth)
 )
 
 (:goal
-	(applied_schema linear_growth)
+	(and
+	(applied_schema s1 linear_growth)
+	(applied_linear_schema moose_births moose_population)
+	)
 )
 )

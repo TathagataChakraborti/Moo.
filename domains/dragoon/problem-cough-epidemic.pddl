@@ -2,6 +2,7 @@
 (:domain dragoon-activity)
 
 (:objects 
+	s1 - student
 	infected_students healthy_students - accumulator
 	probability_infected probability_healthy infectious_meetings - function
 	total_students meetings - parameter
@@ -52,12 +53,12 @@
 	(has_property tp2 meetings)
 	(has_property vp2 meetings)
 	(has_property up2 meetings)
-
+	(has_schema s1 epidemic_growth)
 )
 
 (:goal
-    (and
-	(applied_schema epidemic_growth)
+	(and
+	(applied_schema s1 epidemic_growth)
 	(applied_epidemic_schema total_students meetings probability_infected probability_healthy infectious_meetings infected_students healthy_students)
 	)
 )

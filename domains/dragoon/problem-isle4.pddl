@@ -2,6 +2,7 @@
 (:domain dragoon-activity)
 
 (:objects
+	s1 - student
 	moose_population - accumulator
 	moose_births moose_deaths moose_death_probability - function
 	moose_birth_probability moose_capacity - parameter
@@ -23,7 +24,7 @@
 	(is_part moose_deaths exponential_decay)
 	(is_part moose_death_probability exponential_decay)
 	(is_part moose_capacity carrying_capacity)
-	(is_part moose_death_probability carrying_capacity)
+	(is_part moose_death_probability carrying_capacity)	
 	(has_property da moose_population)
 	(has_property ta moose_population)
 	(has_property va moose_population)
@@ -49,13 +50,16 @@
 	(has_property tp2 moose_capacity)
 	(has_property vp2 moose_capacity)
 	(has_property up2 moose_capacity)
+	(has_schema s1 exponential_growth)
+	(has_schema s1 exponential_decay)
+	(has_schema s1 carrying_capacity)
 )
 
 (:goal
 	(and
-		(applied_schema exponential_growth)
-		(applied_schema exponential_decay)
-		(applied_schema carrying_capacity)
+		(applied_schema s1 exponential_growth)
+		(applied_schema s1 exponential_decay)
+		(applied_schema s1 carrying_capacity)
 		(applied_exponential_schema moose_birth_probability moose_births moose_population)
 		(applied_extended_exponential_schema moose_death_probability moose_deaths moose_population)
 		(applied_capacity_schema moose_capacity moose_death_probability)
