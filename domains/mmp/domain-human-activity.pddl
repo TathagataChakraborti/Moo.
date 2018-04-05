@@ -1,11 +1,11 @@
 (define (domain dragoon-activity)
-(:requirements :strips :typing :equality)
+(:requirements :strips :typing)
 
 (:types
 property node schema student - object
 description type value equation units - property
 accumulator function parameter - node
-linear exponential epidemic capacity interaction - schema
+linear exponential epidemic capacity interaction electrical - schema
 extended_exponential - exponential
 population_interaction - interaction
 )
@@ -24,6 +24,12 @@ population_interaction - interaction
 (applied_interaction_schema ?p1 ?p2 - parameter ?f1 ?f2 - function ?a1 ?a2 - accumulator)
 (applied_linear_schema ?p - parameter ?a - accumulator)
 (is_part ?n - node ?s - schema)
+(apply_type ?c - student ?n - node ?s - schema)
+(apply_type_double ?c - student ?n - node ?s ?s1 - schema)
+(apply_type_triple ?c - student ?n - node ?s ?s1 ?s2 - schema)
+(apply_equation ?c - student ?n - node ?s - schema)
+(apply_equation_double ?c - student ?n - node ?s ?s1 - schema)
+(apply_equation_triple ?c - student ?n - node ?s ?s1 ?s2 - schema)
 )
 
 (:action create_node
@@ -40,32 +46,31 @@ population_interaction - interaction
 
 (:action fill_type_single_schema
 	:parameters (?t - type ?d - description ?n - node ?c - student ?s - schema)
-	:precondition (and
+	:precondition (and 
 					(has_schema ?c ?s)
 					(is_part ?n ?s)
 					(has_property ?t ?n)
 					(is_filled ?d ?n)
 				)
-	:effect (and (is_filled ?t ?n))
+	:effect (and (is_filled ?t ?n) (apply_type ?c ?n ?s))
 )
 
 (:action fill_type_double_schema
 	:parameters (?t - type ?d - description ?n - node ?c - student ?s ?s1 - schema)
-	:precondition (and
+	:precondition (and 
 					(has_schema ?c ?s)
 					(has_schema ?c ?s1)
 					(has_property ?t ?n)
 					(is_part ?n ?s)
 					(is_part ?n ?s1)
 					(is_filled ?d ?n)
-					(not (= ?s ?s1))
 				)
-	:effect (and (is_filled ?t ?n))
+	:effect (and (is_filled ?t ?n) (apply_type_double ?c ?n ?s ?s1))
 )
 
 (:action fill_type_triple_schema
 	:parameters (?t - type ?d - description ?n - node ?c - student ?s ?s1 ?s2 - schema)
-	:precondition (and
+	:precondition (and 
 					(has_schema ?c ?s)
 					(has_schema ?c ?s1)
 					(has_schema ?c ?s2)
@@ -74,11 +79,8 @@ population_interaction - interaction
 					(is_part ?n ?s1)
 					(is_part ?n ?s2)
 					(is_filled ?d ?n)
-					(not (= ?s ?s1))
-					(not (= ?s ?s2))
-					(not (= ?s1 ?s2))
 				)
-	:effect (and (is_filled ?t ?n))
+	:effect (and (is_filled ?t ?n) (apply_type_triple ?c ?n ?s ?s1 ?s2))
 )
 
 (:action fill_value
@@ -101,7 +103,7 @@ population_interaction - interaction
 					(has_property ?e ?n)
 					(is_filled ?t ?n)
 				)
-	:effect (and (is_filled ?e ?n))
+	:effect (and (is_filled ?e ?n) (apply_equation ?c ?n ?s))
 )
 
 (:action fill_equation_double_schema
@@ -113,9 +115,8 @@ population_interaction - interaction
 					(is_part ?n ?s)
 					(is_part ?n ?s1)
 					(is_filled ?t ?n)
-					(not (= ?s ?s1))
 				)
-	:effect (and (is_filled ?e ?n))
+	:effect (and (is_filled ?e ?n) (apply_equation_double ?c ?n ?s ?s1))
 )
 
 (:action fill_equation_triple_schema
@@ -128,11 +129,8 @@ population_interaction - interaction
 					(is_part ?n ?s)
 					(is_part ?n ?s1)
 					(is_filled ?t ?n)
-					(not (= ?s ?s1))
-					(not (= ?s ?s2))
-					(not (= ?s1 ?s2))
 				)
-	:effect (and (is_filled ?e ?n))
+	:effect (and (is_filled ?e ?n) (apply_equation_triple ?c ?n ?s ?s1 ?s2))
 )
 
 (:action complete_accumulator
