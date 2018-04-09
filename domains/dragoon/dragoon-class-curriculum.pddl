@@ -21,7 +21,7 @@ linear exponential extended_exponential capacity epidemic interaction - schema
 
 (:action complete_tutorial
 	:parameters (?s - student ?t - tutorial ?c - schema)
-	:precondition (and (contains_schema ?t ?c)); (not (done ?s ?t)))
+	:precondition (and (contains_schema ?t ?c))
 	:effect (and
 		(has_schema ?s ?c)
 		(done ?s ?t)
@@ -78,7 +78,7 @@ linear exponential extended_exponential capacity epidemic interaction - schema
 
 (:action finish_assignment_one
 	:parameters (?s - student ?a - one_schema ?c - schema)
-	:precondition (and (contains_schema ?a ?c) (applied_schema ?s ?a ?c)) ;(not (done ?s ?a)))
+	:precondition (and (contains_schema ?a ?c) (applied_schema ?s ?a ?c))
 	:effect (and
 		(done ?s ?a)
 		(completed_assignment_one ?s ?a ?c)
@@ -88,7 +88,6 @@ linear exponential extended_exponential capacity epidemic interaction - schema
 (:action finish_assignment_two
 	:parameters (?s - student ?a - two_schema ?c1 ?c2 - schema)
 	:precondition (and
-			;(not (done ?s ?a))
 			(contains_schema ?a ?c1)
 			(contains_schema ?a ?c2)
 			(applied_schema ?s ?a ?c1)
@@ -103,7 +102,6 @@ linear exponential extended_exponential capacity epidemic interaction - schema
 (:action finish_assignment_three
 	:parameters (?s - student ?a - three_schema ?c1 ?c2 ?c3 - schema)
 	:precondition (and 
-			;(not (done ?s ?a))
 			(contains_schema ?a ?c1)
 			(contains_schema ?a ?c2)
 			(contains_schema ?a ?c3)
@@ -120,7 +118,6 @@ linear exponential extended_exponential capacity epidemic interaction - schema
 (:action finish_assignment_four
 	:parameters (?s - student ?a - four_schema ?c1 ?c2 ?c3 ?c4 - schema)
 	:precondition (and 
-			;(not (done ?s ?a))
 			(contains_schema ?a ?c1)
 			(contains_schema ?a ?c2)
 			(contains_schema ?a ?c3)
