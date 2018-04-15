@@ -86,7 +86,7 @@ class GenerateJigsaw:
 		for concept in concepts:
 			containsSchema.append(GenerateJigsaw.containsSchema.format(name, concept))
 			preconditions.append(GenerateJigsaw.hasSchema.format(GenerateJigsaw.firstStudent, concept))
-			preconditions.append(GenerateJigsaw.notOperator.format(GenerateJigsaw.appliedSchema.format(GenerateJigsaw.firstStudent, concept)))
+			#preconditions.append(GenerateJigsaw.notOperator.format(GenerateJigsaw.appliedSchema.format(GenerateJigsaw.firstStudent, concept)))
 			effects.append(GenerateJigsaw.appliedSchema.format(GenerateJigsaw.firstStudent, concept))
 		effects.append(GenerateJigsaw.doneAssignment.format(GenerateJigsaw.firstStudent, name))
 			#preconditionsDouble.append(GenerateJigsaw
@@ -104,7 +104,8 @@ class GenerateJigsaw:
 		effects.append(GenerateJigsaw.doneAssignment.format(GenerateJigsaw.firstStudent, name))
 		effects.append(GenerateJigsaw.doneAssignment.format(GenerateJigsaw.secondStudent, name))
 		effects.append(GenerateJigsaw.appliedSchema.format(GenerateJigsaw.firstStudent, concepts[0]))
-		
+		effects.append(GenerateJigsaw.hasSchema.format(GenerateJigsaw.secondStudent, concepts[0]))
+
 		preconditions = list(containsSchema + parentSchemas + GenerateJigsaw.get_preconditions(1, concepts[0]))
 
 		for concept in parentConcepts:
@@ -113,57 +114,30 @@ class GenerateJigsaw:
 		preconditionsDouble = [[]]
 		effectsDouble = [[]]
 		numberOfConcepts = len(concepts)
+
 		if numberOfConcepts == 1:
 			preconditionsDouble[0] = list(preconditions)
 			#preconditionsDouble[0].append(GenerateJigsaw.notOperator.format(GenerateJigsaw.appliedSchema.format(GenerateJigsaw.secondStudent, concepts[0])))
-			effectsDouble[0]  = (list(effects))
-			effectsDouble[0].append(GenerateJigsaw.hasSchema.format(GenerateJigsaw.secondStudent, concepts[0]))
-		elif numberOfConcepts == 2:
-			preconditionsDouble[0] = list(set(list(preconditions) + GenerateJigsaw.get_preconditions(1, concepts[1])))
-			preconditionsDouble.append(list(set(list(preconditions) + GenerateJigsaw.get_preconditions(2, concepts[1]))))
-			effectsDouble[0] = (list(set(list(effects) + GenerateJigsaw.get_effects(1, concepts[1]))))
-			effectsDouble.append(list(set(list(effects) + GenerateJigsaw.get_effects(2, concepts[1]))))
-		elif numberOfConcepts == 3:
-			#preconditionsDouble.append(list(preconditions))
-			conditions = GenerateJigsaw.get_preconditions(1, concepts[1])
-			conditions = conditions + GenerateJigsaw.get_preconditions(1, concepts[2])
-			preconditionsDouble[0] = list(set(list(preconditions) + conditions))
-			conditions = GenerateJigsaw.get_preconditions(1, concepts[1])
-			conditions = conditions + GenerateJigsaw.get_preconditions(2, concepts[2])
-			preconditionsDouble.append(list(set(list(preconditions) + conditions)))
+			effectsDouble[0]  = list(effects)
 
-			learning = GenerateJigsaw.get_effects(1, concepts[1])
-			learning = learning + GenerateJigsaw.get_effects(1, concepts[2])
-			effectsDouble[0] = list(set(list(effects) + learning))
-			learning = GenerateJigsaw.get_effects(1, concepts[1])
-			learning = learning + GenerateJigsaw.get_effects(2, concepts[2])
-			effectsDouble.append(list(set(list(effects) + learning)))
-		elif numberOfConcepts == 4:
-			conditions = GenerateJigsaw.get_preconditions(1, concepts[1])
-			conditions = conditions + GenerateJigsaw.get_preconditions(1, concepts[2])
-			conditions = conditions + GenerateJigsaw.get_preconditions(1, concepts[3])
-			preconditionsDouble[0] = list(set(list(preconditions) + conditions))
-			conditions = GenerateJigsaw.get_preconditions(1, concepts[1])
-			conditions = conditions + GenerateJigsaw.get_preconditions(1, concepts[2])
-			conditions = conditions + GenerateJigsaw.get_preconditions(2, concepts[3])
-			preconditionsDouble.append(list(set(list(preconditions) + conditions)))
-			conditions = GenerateJigsaw.get_preconditions(1, concepts[1])
-			conditions = conditions + GenerateJigsaw.get_preconditions(2, concepts[2])
-			conditions = conditions + GenerateJigsaw.get_preconditions(2, concepts[3])
-			preconditionsDouble.append(list(set(list(preconditions) + conditions)))
+		# each of them is for the action
+		for i in range(1, numberOfConcepts, 1):
+			# each of them for the precondition and effect
+			pre = list(preconditions)
+			eff = list(effects)
+			for j in range(1, (numberOfConcepts/2)+1, 1):
+				student = 1
+				if j >= (numberOfConcepts - i):
+					student = 2
+				pre = pre + GenerateJigsaw.get_preconditions(student, concepts[j])
+				eff = eff + GenerateJigsaw.get_effects(student, concepts[j])
 
-			learning = GenerateJigsaw.get_effects(1, concepts[1])
-			learning = learning + GenerateJigsaw.get_effects(1, concepts[2])
-			learning = learning + GenerateJigsaw.get_effects(1, concepts[3])
-			effectsDouble[0] = list(set(list(effects) + learning))
-			learning = GenerateJigsaw.get_effects(1, concepts[1])
-			learning = learning + GenerateJigsaw.get_effects(1, concepts[2])
-			learning = learning + GenerateJigsaw.get_effects(2, concepts[3])
-			effectsDouble.append(list(set(list(effects) + learning)))
-			learning = GenerateJigsaw.get_effects(1, concepts[1])
-			learning = learning + GenerateJigsaw.get_effects(1, concepts[2])
-			learning = learning + GenerateJigsaw.get_effects(2, concepts[3])
-			effectsDouble.append(list(set(list(effects) + learning)))
+			if i == 1:
+				preconditionsDouble[i-1] = pre
+				effectsDouble[i-1] = eff
+			else:
+				preconditionsDouble.append(pre)
+				effectsDouble.append(eff)
 
 		action = GenerateJigsaw.actionTogether
 		for i in range(len(preconditionsDouble)):
@@ -211,20 +185,26 @@ class Generator:
 		self.fileName = fileName
 		self.students = students
 		self.minAssignments = assignments
+		self.parentConcepts = 4
+		self.maxConceptsTaught = 4
 
 		self.jigsaw = GenerateJigsaw()
 
 	def set_parameters(self):
 		self.assignments = int(random()*10 + self.minAssignments)
-		self.assignments = 6
+		self.assignments = 20
 		self.concepts = int(self.assignments / 2)
+		c2a = dict()
 
 		for i in range(1, self.concepts+1):
+			concept = GenerateJigsaw.conceptID + str(i)
 			GenerateJigsaw.tutorials[GenerateJigsaw.tutorialID + str(i)] = GenerateJigsaw.conceptID + str(i)
+			c2a[concept] = 0
+
 			parentConcepts = 1
 			if i > 3:
-				parentConcepts = int(floor(random()*3))
-				parentConcepts = 0
+				parentConcepts = int(ceil(random()*self.parentConcepts))
+				#parentConcepts = 0
 			if i == 1:
 				GenerateJigsaw.concepts[GenerateJigsaw.conceptID + '1'] = []
 			elif i == 2:
@@ -246,16 +226,31 @@ class Generator:
 				GenerateJigsaw.assignments[GenerateJigsaw.assignmentID + '2'] = ['C2']
 			else:
 				# number of concepts that assignment will teach
-				concepts = int(ceil(min(random()*4, i)))
+				concepts = int(ceil(min(random()*self.maxConceptsTaught, i)))
 				assignmentConcept = set()
 				for j in range(0, concepts):
 					# concept ID that it will teach
 					ID = GenerateJigsaw.conceptID + str(int(ceil(random()*min(i, self.concepts))))
 					if self.validate(assignmentConcept, ID):
 						assignmentConcept.add(ID)
+						c2a[ID] = c2a[ID]+1
 
 				GenerateJigsaw.assignments[GenerateJigsaw.assignmentID + str(i)] = list(assignmentConcept)
+
+		print c2a
+		for concept in GenerateJigsaw.concepts.keys():
+			while c2a[concept] < 2:
+				assignmentID = GenerateJigsaw.assignmentID + str(int(ceil((random() +  1)*self.concepts)))
+				assignment = GenerateJigsaw.assignments[assignmentID]
+				if len(assignment) < self.maxConceptsTaught and self.validate(assignment, concept):
+					assignment.append(concept)
+					c2a[concept] = c2a[concept] + 1
+
+		#Isle domain
 		print GenerateJigsaw.assignments
+		#GenerateJigsaw.assignments = {'isle1': ['linear_growth'], 'isle2': ['exponential_growth'], 'isle3': ['exponential_growth', 'exponential_decay'], 'isle4': ['exponential_growth', 'exponential_decay', 'ee_growth', 'carrying_capacity'], 'isle5': ['exponential_growth', 'exponential_decay'], 'isle6': ['exponential_growth', 'carrying_capacity', 'predator_prey'], 'rabbits': ['exponential_growth'], 'epic': ['flu']}
+		#GenerateJigsaw.concepts = {'linear_growth': [], 'exponential_growth': ['linear_growth'], 'exponential_decay': ['linear_growth'], 'ee_growth': ['exponential_growth', 'exponential_decay'], 'predator_prey': ['exponential_growth', 'exponential_decay'], 'carrying_capacity': ['linear_growth'], 'flu': ['exponential_growth', 'exponential_decay', 'linear_growth']}
+		#GenerateJigsaw.tutorials = {'T1': 'linear_growth', 'T2': 'exponential_growth', 'T3': 'exponential_decay', 'T4': 'ee_growth', 'T5': 'predator_prey', 'T6': 'carrying_capacity', 'T7': 'flu'}
 
 	def validate(self, concepts, ID):
 		for concept in concepts:
