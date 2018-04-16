@@ -1,2 +1,5 @@
 .*.*.swp
 *.pyc
+domains/dragoon/domains/domain-jigsaw_*
+domains/dragoon/domains/problem-jigsaw_*
+domains/results*

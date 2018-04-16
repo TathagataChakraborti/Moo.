@@ -1,6 +1,7 @@
 from random import random
 from math import ceil, floor
-
+import argparse
+import sys
 
 class GenerateJigsaw:
 	path = "dragoon/domains/"
@@ -26,6 +27,7 @@ class GenerateJigsaw:
 	
 	def __init__(self):
 		print "Generator created"
+		self.is_dragoon = False
 
 	def generate_data(self):
 		self.write_domain_file()
@@ -67,7 +69,12 @@ class GenerateJigsaw:
 		problem_template = problem_template.replace('{I}', '\n'.join(initialState))
 		problem_template = problem_template.replace('{G}', '\n'.join(goalState))
 
-		with open(GenerateJigsaw.path + 'problem-jigsaw.pddl', 'w') as f:
+		fileName = 'problem-jigsaw.pddl'
+		print GenerateJigsaw.students
+		if not self.is_dragoon and len(GenerateJigsaw.students) == 1:
+			fileName = 'problem-jigsaw-single.pddl'
+
+		with open(GenerateJigsaw.path + fileName, 'w') as f:
 			f.write(problem_template)
 
 
@@ -216,9 +223,7 @@ class Generator:
 					parents.add(GenerateJigsaw.conceptID + str(index))
 				GenerateJigsaw.concepts[GenerateJigsaw.conceptID + str(i)] = list(parents)
 
-		for i in range(1, self.students+1):
-			GenerateJigsaw.students.append(GenerateJigsaw.studentID + str(i))
-
+		self.create_students(self.students)
 		for i in range(1, self.assignments+1):
 			if i == 1:
 				GenerateJigsaw.assignments[GenerateJigsaw.assignmentID + '1'] = ['C1']
@@ -237,7 +242,6 @@ class Generator:
 
 				GenerateJigsaw.assignments[GenerateJigsaw.assignmentID + str(i)] = list(assignmentConcept)
 
-		print c2a
 		for concept in GenerateJigsaw.concepts.keys():
 			while c2a[concept] < 2:
 				assignmentID = GenerateJigsaw.assignmentID + str(int(ceil((random() +  1)*self.concepts)))
@@ -248,9 +252,17 @@ class Generator:
 
 		#Isle domain
 		print GenerateJigsaw.assignments
-		#GenerateJigsaw.assignments = {'isle1': ['linear_growth'], 'isle2': ['exponential_growth'], 'isle3': ['exponential_growth', 'exponential_decay'], 'isle4': ['exponential_growth', 'exponential_decay', 'ee_growth', 'carrying_capacity'], 'isle5': ['exponential_growth', 'exponential_decay'], 'isle6': ['exponential_growth', 'carrying_capacity', 'predator_prey'], 'rabbits': ['exponential_growth'], 'epic': ['flu']}
-		#GenerateJigsaw.concepts = {'linear_growth': [], 'exponential_growth': ['linear_growth'], 'exponential_decay': ['linear_growth'], 'ee_growth': ['exponential_growth', 'exponential_decay'], 'predator_prey': ['exponential_growth', 'exponential_decay'], 'carrying_capacity': ['linear_growth'], 'flu': ['exponential_growth', 'exponential_decay', 'linear_growth']}
-		#GenerateJigsaw.tutorials = {'T1': 'linear_growth', 'T2': 'exponential_growth', 'T3': 'exponential_decay', 'T4': 'ee_growth', 'T5': 'predator_prey', 'T6': 'carrying_capacity', 'T7': 'flu'}
+
+	def generate_dragoon_domain(self):
+		GenerateJigsaw.assignments = {'isle1': ['linear_growth'], 'isle2': ['exponential_growth'], 'isle3': ['exponential_growth', 'exponential_decay'], 'isle4': ['exponential_growth', 'exponential_decay', 'ee_growth', 'carrying_capacity'], 'isle5': ['exponential_growth', 'exponential_decay'], 'isle6': ['exponential_growth', 'carrying_capacity', 'predator_prey'], 'rabbits': ['exponential_growth'], 'epic': ['flu']}
+		GenerateJigsaw.concepts = {'linear_growth': [], 'exponential_growth': ['linear_growth'], 'exponential_decay': ['linear_growth'], 'ee_growth': ['exponential_growth', 'exponential_decay'], 'predator_prey': ['exponential_growth', 'exponential_decay'], 'carrying_capacity': ['linear_growth'], 'flu': ['exponential_growth', 'exponential_decay', 'linear_growth']}
+		GenerateJigsaw.tutorials = {'T1': 'linear_growth', 'T2': 'exponential_growth', 'T3': 'exponential_decay', 'T4': 'ee_growth', 'T5': 'predator_prey', 'T6': 'carrying_capacity', 'T7': 'flu'}
+
+	def create_students(self, student):
+		self.students = student
+		GenerateJigsaw.students = []
+		for i in range(1, self.students+1):
+			GenerateJigsaw.students.append(GenerateJigsaw.studentID + str(i))
 
 	def validate(self, concepts, ID):
 		for concept in concepts:
@@ -262,10 +274,27 @@ class Generator:
 				return False
 
 		return True
+
 def main():
+	parser = argparse.ArgumentParser('Lets Solve the Jigsaw')
+	parser.add_argument('-s', '--students', type=int, help="Number of students for the Jigsaw problem in Dragoon class.")
 	g = Generator('')
-	g.set_parameters()
-	g.jigsaw.generate_data()
+	g.jigsaw.is_dragoon = False
+	if not "-s" in sys.argv[1:]:
+		print "Number of students not provided, so going for the random case"
+		g.set_parameters()
+		g.jigsaw.generate_data()
+		g.create_students(1)
+		g.jigsaw.write_problem_file()
+	else:
+		g.jigsaw.is_dragoon = True
+		print "Creating Dragoon domain"
+		args = parser.parse_args()
+		s = args.students
+		g.generate_dragoon_domain()
+		g.create_students(s)
+		g.jigsaw.generate_data()
+
 
 if __name__ == "__main__":
 	main()
